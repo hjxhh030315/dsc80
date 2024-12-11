@@ -405,6 +405,53 @@
 <iframe src="./imgs/missingness.html" width="90%" height="600px" frameBorder=0></iframe>
 <p>From both plot intepretation and numerical calculation</p>
 <p>We get <strong>P-value</strong> of 0.0 for our permuation test. This means we reject the null hypothesis that the distribution of <code>n_steps</code> is the same for recipes with missing review and without missing review.</p>
+<h3 id="hypothesis-testing">Hypothesis Testing:</h3>
+<p><strong>Objective</strong>: Our latest analysis delves into how the sugar content of recipes influences the diversity of user ratings. Understanding this variance helps us gauge consumer preferences and dietary perceptions related to sugar.</p>
+<h5 id="null-hypothesis-h">Null Hypothesis (H₀)</h5>
+<p>The null hypothesis states that there is no difference in the variance of recipe ratings between high-sugar recipes (more than 150 grams of sugar) and low-sugar recipes (150 grams of sugar or less). This implies that the sugar content does not affect the variability in how recipes are rated.</p>
+<p>H0: Var(ratings|sugar &gt;150) = Var(ratings|sugar&lt;=150)</p>
+<h5 id="alternative-hypothesis-h1">Alternative Hypothesis (H1)</h5>
+<p>The alternative hypothesis contends that there is a difference in the variance of ratings between high-sugar and low-sugar recipes. This suggests that the amount of sugar in a recipe does influence the variability in ratings, possibly due to varying preferences or perceptions among users about sugar content.</p>
+<p>H1: Var(ratings|sugar &gt;150) not = Var(ratings|sugar&lt;=150)</p>
+<h5 id="test-statistic">Test statistic</h5>
+<p>Absolute difference in Variances</p>
+<ul>
+<li>Test Statistic = |Var_high sugar - Var_low sugar|</li>
+</ul>
+<p>P value is 0: The result strongly suggests that the amount of sugar in recipes has a significant effect on the variance of the ratings they receive. This could be interpreted to mean that sugar content impacts user satisfaction or opinion diversity.</p>
+<p>Since the p-value is 0, we reject the null hypothesis. This conclusion indicates that the difference in variance between high sugar and low sugar recipes is statistically significant and not due to random chance.
+Implications: Rejecting the null hypothesis suggests that sugar content does significantly affect the variance in ratings. Recipes with higher sugar might be causing more diverse reactions among the users, possibly due to varying preferences or health considerations.</p>
+<iframe src="./imgs/hypo_test.html" width="90%" height="600px" frameBorder=0></iframe>
+<h4 id="framing-the-problem">Framing the Problem</h4>
+<p>In our ongoing exploration of what influences recipe ratings on our platform, we are now developing a model to predict the ratings a recipe might receive based on various attributes. This predictive insight can empower recipe creators to adjust their recipes in ways that enhance user satisfaction.</p>
+<p>We aim to predict the ratings recipes receive based on three key features: sugar content, number of preparation steps, and total preparation time. These factors have been chosen based on their potential impact on user preferences and previous analytical findings showing sugar's significant role in rating variability.</p>
+<h3 id="baseline-model">Baseline Model</h3>
+<p>In our quest to understand what influences a recipe's rating, we've established a baseline model that predicts ratings based on three key attributes: the sugar content, protein content, and number of ingredients in a recipe. This initial model sets the groundwork for our predictive analytics, allowing us to gauge feature significance and model effectiveness right from the start.</p>
+<h4 id="model-structure">Model Structure:</h4>
+<p>Our baseline model incorporates a linear regression algorithm, chosen for its simplicity and interpretability. To prepare our data for modeling, we employed a combination of standard scaling for sugar and protein levels to normalize these features and a quantile transformation for the number of ingredients to reduce the impact of outliers and skewness in the data distribution.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:right">RMSE</th>
+<th style="text-align:right">R_squared</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Train</td>
+<td style="text-align:right">1.08221</td>
+<td style="text-align:right">0.000265238</td>
+</tr>
+<tr>
+<td style="text-align:left">Test</td>
+<td style="text-align:right">1.06253</td>
+<td style="text-align:right">0.000462691</td>
+</tr>
+</tbody>
+</table>
+<p>Our baseline model achieved an RMSE of 1.080451 on the training set and 1.069675 on the testing set. These initial results are promising as they indicate the model's ability to predict ratings with reasonable accuracy, serving as a benchmark for further enhancements. While our baseline model provides a good starting point, we plan to explore more complex models and additional features that may capture the nuances of recipe ratings more effectively.</p>
+<h3 id="final-model">Final Model</h3>
 
             
             

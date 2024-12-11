@@ -173,31 +173,37 @@ We get **P-value** of 0.0 for our permuation test. This means we reject the null
 
 
 ### Hypothesis Testing: 
-**Objective**: Our latest analysis delves into how the sugar content of recipes influences the diversity of user ratings. Understanding this variance helps us gauge consumer preferences and dietary perceptions related to sugar.
-##### Null Hypothesis (H₀) ####
+**Objective**: From the scatter plot between sugar content and rating, delves into how the sugar content of recipes influences the diversity of user ratings. Understanding this variance helps us gauge consumer preferences and dietary perceptions related to sugar.
+
+<iframe src="./imgs/sugar_rating_scatter.html" width="90%" height="600px" frameBorder=0></iframe>
+
+**Null Hypothesis ($H_0$)**
 The null hypothesis states that there is no difference in the variance of recipe ratings between high-sugar recipes (more than 150 grams of sugar) and low-sugar recipes (150 grams of sugar or less). This implies that the sugar content does not affect the variability in how recipes are rated.
 
 
-H0: Var(ratings|sugar >150) = Var(ratings|sugar<=150)
+$H_0: \text{Var}(\text{ratings}|\text{sugar} >150) = \text{Var}(\text{ratings}|\text{sugar} \leq 150)$
 
-##### Alternative Hypothesis (H1) ####
+**Alternative Hypothesis ($H_\alpha$)**
 The alternative hypothesis contends that there is a difference in the variance of ratings between high-sugar and low-sugar recipes. This suggests that the amount of sugar in a recipe does influence the variability in ratings, possibly due to varying preferences or perceptions among users about sugar content.
 
 
-H1: Var(ratings|sugar >150) not = Var(ratings|sugar<=150)
+$H_\alpha: \text{Var}(\text{ratings}|\text{sugar} >150) \neq \text{Var}(\text{ratings}|\text{sugar} \leq 150)$
 
 ##### Test statistic
 Absolute difference in Variances 
 
-- Test Statistic = |Var_high sugar - Var_low sugar|
+$\text{Test Statistic} = \left|\text{Var}(\text{high sugar}) - \text{Var}(\text{low sugar})\right|$
 
-P value is 0: The result strongly suggests that the amount of sugar in recipes has a significant effect on the variance of the ratings they receive. This could be interpreted to mean that sugar content impacts user satisfaction or opinion diversity.
+We ran 1000 permutation test on the `rating` column and get the following result
+
+<iframe src="./imgs/hypo_test.html" width="90%" height="600px" frameBorder=0></iframe>
+
+**P_value = 0**: The result strongly suggests that the amount of sugar in recipes has a significant effect on the variance of the ratings they receive. This could be interpreted to mean that sugar content impacts user satisfaction or opinion diversity.
 
 
 Since the p-value is 0, we reject the null hypothesis. This conclusion indicates that the difference in variance between high sugar and low sugar recipes is statistically significant and not due to random chance.
 Implications: Rejecting the null hypothesis suggests that sugar content does significantly affect the variance in ratings. Recipes with higher sugar might be causing more diverse reactions among the users, possibly due to varying preferences or health considerations.
 
-![permutation of ](/imgs/permuationg_hypothesis.png)
 
 
 #### Framing the Problem ####
@@ -213,7 +219,30 @@ In our quest to understand what influences a recipe's rating, we've established 
 #### Model Structure: 
 Our baseline model incorporates a linear regression algorithm, chosen for its simplicity and interpretability. To prepare our data for modeling, we employed a combination of standard scaling for sugar and protein levels to normalize these features and a quantile transformation for the number of ingredients to reduce the impact of outliers and skewness in the data distribution.
 
+|       |    RMSE |   R_squared |
+|:------|--------:|------------:|
+| Train | 1.08221 | 0.000265238 |
+| Test  | 1.06253 | 0.000462691 |
+
 Our baseline model achieved an RMSE of 1.080451 on the training set and 1.069675 on the testing set. These initial results are promising as they indicate the model's ability to predict ratings with reasonable accuracy, serving as a benchmark for further enhancements. While our baseline model provides a good starting point, we plan to explore more complex models and additional features that may capture the nuances of recipe ratings more effectively.
 
 ### Final Model
+
+#### Introduction to Final Model: 
+In our pursuit to refine our predictive model and improve upon our baseline predictions, we introduced additional features and employed a more complex modeling technique. Our final model leverages a Random Forest Regressor, known for its robustness and ability to handle non-linear relationships, to predict recipe ratings.
+
+#### Feature Selection and Engineering:
+- **Sugar Content**: Continued from our baseline model, sugar content is standardized to account for scale differences and its impact on taste preferences is further analyzed.
+- **Protein Content**: Also standardized, we explore protein's role in determining how health-conscious decisions influence recipe ratings.
+- **Number of Ingredients**: We quantify complexity and use a quantile transformation to normalize this feature, reducing skewness.
+- **Interaction Terms**: We introduced interaction terms between sugar and protein to capture their combined effects on ratings.
+- **Polynomial Features**: To better capture non-linear relationships, polynomial features for sugar and protein were added.
+
+### Model Enhancements:
+ - **Random Forest Regressor**: We chose this model for its effectiveness in handling various types of data and its capability to improve generalization over the baseline model.
+- **Hyperparameter Tuning**: Utilizing GridSearchCV, we meticulously searched for the best hyperparameters, including max_depth, n_estimators, min_samples_split, and max_features, to optimize our model's performance.
+
+### Performance Evaluation:
+- **Metric Used**: We evaluated our model using RMSE to measure the average magnitude of the prediction errors, providing us with a clear indicator of model accuracy.
+- **Results**: Our final model achieved an RMSE of 1.083, a noticeable improvement from the baseline model. This indicates a more accurate model that better captures the underlying patterns in the data.
 

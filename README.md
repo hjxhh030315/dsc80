@@ -170,3 +170,50 @@ And we use **Absolute Difference in Mean** as our test statistics
 From both plot intepretation and numerical calculation
 
 We get **P-value** of 0.0 for our permuation test. This means we reject the null hypothesis that the distribution of `n_steps` is the same for recipes with missing review and without missing review.
+
+
+### Hypothesis Testing: 
+**Objective**: Our latest analysis delves into how the sugar content of recipes influences the diversity of user ratings. Understanding this variance helps us gauge consumer preferences and dietary perceptions related to sugar.
+##### Null Hypothesis (H₀) ####
+The null hypothesis states that there is no difference in the variance of recipe ratings between high-sugar recipes (more than 150 grams of sugar) and low-sugar recipes (150 grams of sugar or less). This implies that the sugar content does not affect the variability in how recipes are rated.
+
+
+H0: Var(ratings|sugar >150) = Var(ratings|sugar<=150)
+
+##### Alternative Hypothesis (H1) ####
+The alternative hypothesis contends that there is a difference in the variance of ratings between high-sugar and low-sugar recipes. This suggests that the amount of sugar in a recipe does influence the variability in ratings, possibly due to varying preferences or perceptions among users about sugar content.
+
+
+H1: Var(ratings|sugar >150) not = Var(ratings|sugar<=150)
+
+##### Test statistic
+Absolute difference in Variances 
+
+- Test Statistic = |Var_high sugar - Var_low sugar|
+
+P value is 0: The result strongly suggests that the amount of sugar in recipes has a significant effect on the variance of the ratings they receive. This could be interpreted to mean that sugar content impacts user satisfaction or opinion diversity.
+
+
+Since the p-value is 0, we reject the null hypothesis. This conclusion indicates that the difference in variance between high sugar and low sugar recipes is statistically significant and not due to random chance.
+Implications: Rejecting the null hypothesis suggests that sugar content does significantly affect the variance in ratings. Recipes with higher sugar might be causing more diverse reactions among the users, possibly due to varying preferences or health considerations.
+
+![permutation of ](/imgs/permuationg_hypothesis.png)
+
+
+#### Framing the Problem ####
+
+In our ongoing exploration of what influences recipe ratings on our platform, we are now developing a model to predict the ratings a recipe might receive based on various attributes. This predictive insight can empower recipe creators to adjust their recipes in ways that enhance user satisfaction.
+
+We aim to predict the ratings recipes receive based on three key features: sugar content, number of preparation steps, and total preparation time. These factors have been chosen based on their potential impact on user preferences and previous analytical findings showing sugar's significant role in rating variability.
+
+### Baseline Model
+
+In our quest to understand what influences a recipe's rating, we've established a baseline model that predicts ratings based on three key attributes: the sugar content, protein content, and number of ingredients in a recipe. This initial model sets the groundwork for our predictive analytics, allowing us to gauge feature significance and model effectiveness right from the start.
+
+#### Model Structure: 
+Our baseline model incorporates a linear regression algorithm, chosen for its simplicity and interpretability. To prepare our data for modeling, we employed a combination of standard scaling for sugar and protein levels to normalize these features and a quantile transformation for the number of ingredients to reduce the impact of outliers and skewness in the data distribution.
+
+Our baseline model achieved an RMSE of 1.080451 on the training set and 1.069675 on the testing set. These initial results are promising as they indicate the model's ability to predict ratings with reasonable accuracy, serving as a benchmark for further enhancements. While our baseline model provides a good starting point, we plan to explore more complex models and additional features that may capture the nuances of recipe ratings more effectively.
+
+### Final Model
+

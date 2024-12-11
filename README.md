@@ -1,4 +1,4 @@
-# Sugar and Protein Influence on Recipe Ratings: An Investigation into Variance Differences
+# Sugar and Protein Influence on Recipe Ratings
 
 ## Introduction
 In this analysis, we explore the influence of nutritional components and recipe complexity on user ratings within a comprehensive dataset of recipes. This dataset not only details each recipe's name and preparation time but also enriches our study with a breakdown of nutritional content—specifically focusing on sugar, protein, and the total number of ingredients. By establishing a model to predict recipe ratings based on these variables, we aim to uncover patterns that may suggest how certain nutritional aspects and recipe complexity influence user preferences and ratings. This exploration seeks to provide insights into the dietary preferences that resonate most with users, potentially guiding healthier or more appealing recipe modifications
@@ -234,15 +234,50 @@ In our pursuit to refine our predictive model and improve upon our baseline pred
 #### Feature Selection and Engineering:
 - **Sugar Content**: Continued from our baseline model, sugar content is standardized to account for scale differences and its impact on taste preferences is further analyzed.
 - **Protein Content**: Also standardized, we explore protein's role in determining how health-conscious decisions influence recipe ratings.
-- **Number of Ingredients**: We quantify complexity and use a quantile transformation to normalize this feature, reducing skewness.
-- **Interaction Terms**: We introduced interaction terms between sugar and protein to capture their combined effects on ratings.
+- **Number of Ingredients**: We introduced `n_ingredients` as a new feature used for prediction.
 - **Polynomial Features**: To better capture non-linear relationships, polynomial features for sugar and protein were added.
+  
 
 ### Model Enhancements:
  - **Random Forest Regressor**: We chose this model for its effectiveness in handling various types of data and its capability to improve generalization over the baseline model.
-- **Hyperparameter Tuning**: Utilizing GridSearchCV, we meticulously searched for the best hyperparameters, including max_depth, n_estimators, min_samples_split, and max_features, to optimize our model's performance.
+- **Hyperparameter Tuning**: Utilizing GridSearchCV, we searched for the best hyperparameters, including max_depth, n_estimators, min_samples_split, and max_features, to optimize our model's performance and uses 5 folds for cross validation to improve the model's ability to predict unseen data.
 
 ### Performance Evaluation:
 - **Metric Used**: We evaluated our model using RMSE to measure the average magnitude of the prediction errors, providing us with a clear indicator of model accuracy.
-- **Results**: Our final model achieved an RMSE of 1.0814234983971323, a noticeable improvement from the baseline model with 0.056. This indicates a more accurate model that better captures the underlying patterns in the data.
+- **Results**: Our final model achieved an RMSE of 1.05734, a noticeable improvement from the baseline model with 0.03. This indicates a more accurate model that better captures the underlying patterns in the data.
+  
+    |       |    RMSE |
+    |:------|--------:|
+    | Train | 1.08061 |
+    | Test  | 1.05734 |
+
+
+
+### Fairness Analysis Report
+
+#### Objective
+To investigate whether the model's prediction accuracy, as measured by RMSE, differs significantly based on the num of minutes it takes to finish the recipes.
+
+#### Methodology
+- **Data Segmentation**:
+   - Recipes were divided into two groups based on their `minutes`:
+     - **Group Less Time(`minutes` <= 30)**
+     - **Group More Time (`minutes` > 30)**
+
+- **Model Prediction and RMSE Calculation**:
+   - The trained model predicted ratings for each group.
+   - RMSE was computed for each group to evaluate the prediction accuracy.
+
+- **Observation**:
+   - Calculated the observed absolute difference in RMSE between the two groups.
+
+- **Permutation Test**:
+   - Conducted 1000 permutations by randomly shuffling the `minutes` column, split to two groups, make prediction use our model for each group and calculating the RMSEs for these shuffled groups.
+
+#### Results
+<iframe src="./imgs/fairness.html" width="90%" height="600px" frameBorder=0></iframe>
+
+#### Conclusion
+We get **P-value** of 0 from the permutation test suggesting that our model makes prediction with different error for the two groups. This further implies that our model have potential bias and need more investigation to improve.
+
 

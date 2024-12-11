@@ -1,4 +1,4 @@
-# Sugar's Influence on Recipe Ratings: An Investigation into Variance Differences
+# Sugar and Protein Influence on Recipe Ratings: An Investigation into Variance Differences
 
 ## Introduction
 In this analysis, we explore the influence of nutritional components and recipe complexity on user ratings within a comprehensive dataset of recipes. This dataset not only details each recipe's name and preparation time but also enriches our study with a breakdown of nutritional content—specifically focusing on sugar, protein, and the total number of ingredients. By establishing a model to predict recipe ratings based on these variables, we aim to uncover patterns that may suggest how certain nutritional aspects and recipe complexity influence user preferences and ratings. This exploration seeks to provide insights into the dietary preferences that resonate most with users, potentially guiding healthier or more appealing recipe modifications
@@ -219,12 +219,12 @@ In our quest to understand what influences a recipe's rating, we've established 
 #### Model Structure: 
 Our baseline model incorporates a linear regression algorithm, chosen for its simplicity and interpretability. To prepare our data for modeling, we employed a combination of standard scaling for sugar and protein levels to normalize these features and a quantile transformation for the number of ingredients to reduce the impact of outliers and skewness in the data distribution.
 
-|       |    RMSE |   R_squared |
-|:------|--------:|------------:|
-| Train | 1.08221 | 0.000265238 |
-| Test  | 1.06253 | 0.000462691 |
+|       |    RMSE |
+|:------|--------:|
+| Train | 1.076148| 
+| Test  | 1.087220| 
 
-Our baseline model achieved an RMSE of 1.080451 on the training set and 1.069675 on the testing set. These initial results are promising as they indicate the model's ability to predict ratings with reasonable accuracy, serving as a benchmark for further enhancements. While our baseline model provides a good starting point, we plan to explore more complex models and additional features that may capture the nuances of recipe ratings more effectively.
+Our baseline model achieved an RMSE of 1.076148 on the training set and 1.087220 on the testing set. These initial results are promising as they indicate the model's ability to predict ratings with reasonable accuracy, serving as a benchmark for further enhancements. While our baseline model provides a good starting point, we plan to explore more complex models and additional features that may capture the nuances of recipe ratings more effectively.
 
 ### Final Model
 
@@ -244,5 +244,5 @@ In our pursuit to refine our predictive model and improve upon our baseline pred
 
 ### Performance Evaluation:
 - **Metric Used**: We evaluated our model using RMSE to measure the average magnitude of the prediction errors, providing us with a clear indicator of model accuracy.
-- **Results**: Our final model achieved an RMSE of 1.083, a noticeable improvement from the baseline model. This indicates a more accurate model that better captures the underlying patterns in the data.
+- **Results**: Our final model achieved an RMSE of 1.0814234983971323, a noticeable improvement from the baseline model with 0.056. This indicates a more accurate model that better captures the underlying patterns in the data.
 
